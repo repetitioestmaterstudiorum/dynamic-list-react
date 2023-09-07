@@ -1,0 +1,24 @@
+{
+	"name": "dynamic-list-react",
+	"version": "1.0.0",
+	"description": "Smart input management for dynamic React forms.",
+	"main": "dist/DynamicList.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/repetitioestmaterstudiorum/dynamic-list-react.git"
+	},
+	"keywords": [
+		"dynamic",
+		"list",
+		"nomodes"
+	],
+	"author": "repetitioestmaterstudiorum",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/repetitioestmaterstudiorum/dynamic-list-react/issues"
+	},
+	"homepage": "https://github.com/repetitioestmaterstudiorum/dynamic-list-react#readme"
+}
