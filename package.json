@@ -1,24 +1,33 @@
 {
 	"name": "dynamic-list-react",
 	"version": "1.0.0",
-	"description": "Smart input management for dynamic React forms.",
+	"description": "No-modes input management for dynamic React forms.",
 	"main": "dist/DynamicList.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"prepublish": "tsc"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/repetitioestmaterstudiorum/dynamic-list-react.git"
 	},
 	"keywords": [
-		"dynamic",
-		"list",
-		"nomodes"
+		"dynamic list",
+		"no modes",
+		"react"
 	],
 	"author": "repetitioestmaterstudiorum",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/repetitioestmaterstudiorum/dynamic-list-react/issues"
 	},
-	"homepage": "https://github.com/repetitioestmaterstudiorum/dynamic-list-react#readme"
+	"homepage": "https://github.com/repetitioestmaterstudiorum/dynamic-list-react#readme",
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.21",
+		"@types/react-dom": "^18.2.7",
+		"typescript": "^5.2.2"
+	}
 }
