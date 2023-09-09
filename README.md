@@ -1,6 +1,6 @@
 # dynamic-list-react
 
-Inspired by Larry Tesler's work, this package includes a react component to render a list of input items that can be added, updated and removed without switching between edit and view modes.
+Inspired by Larry Tesler's work, this package contains a react component to render a list of input items that can be added to, updated and removed from without switching between edit and view modes and without any buttons (optionally, a delete button can be shown for each item).
 
 ## Installation
 
@@ -10,25 +10,17 @@ Inspired by Larry Tesler's work, this package includes a react component to rend
 
 ### Basic Example
 
+![Basic Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/basic-example.gif)
+
 ```javascript
 import React from 'react';
 import { DynamicList, type HandleInputChange } from 'dynamic-list-react';
 
 export function ExampleDynamicList() {
-	type ItemType = Record<string, any>;
-
-	function getCurrentData() {
-		return JSON.parse(localStorage.getItem('storageKey') || '[]') as ItemType[];
-	}
-
-	function setData(data: ItemType[]) {
-		localStorage.setItem('storageKey', JSON.stringify(data));
-	}
-
 	const data = getCurrentData();
 	const defaultItem = { name: '' };
 
-	function updateKeyValue(_id: string, key: string, value: any) {
+	const updateKeyValue = (_id: string, key: string, value: any) => {
 		const currentData = getCurrentData();
 		const itemToUpdate = currentData.find(item => item._id === _id);
 		if (itemToUpdate) {
@@ -37,12 +29,12 @@ export function ExampleDynamicList() {
 		}
 	}
 
-	function removeItem(_id: string) {
+	const removeItem = (_id: string) => {
 		const currentData = getCurrentData();
 		setData(currentData.filter(item => item._id !== _id));
 	}
 
-	function addItem(item: ItemType) {
+	const addItem = (item: ItemType) => {
 		const currentData = getCurrentData();
 		setData(currentData.concat(item));
 	}
@@ -68,53 +60,51 @@ export function ExampleDynamicList() {
 		/>
 	);
 }
+
+function getCurrentData() {
+		return JSON.parse(localStorage.getItem('storageKey') || '[]') as ItemType[];
+	}
+
+function setData(data: ItemType[]) {
+	localStorage.setItem('storageKey', JSON.stringify(data));
+}
+
+type ItemType = Record<string, any>;
 ```
 
 ### Advanced Example
 
+![Advanced Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/advanced-example.gif)
+
 ```javascript
-import React from 'react';
-import {
-	DynamicList,
-	type HandleDelete,
-	type HandleInputChange,
-} from 'dynamic-list-react';
+import React from 'react'
+import { DynamicList, type HandleDelete, type HandleInputChange } from 'dynamic-list-react'
 
 export function ExampleDynamicList() {
-	type ItemType = Record<string, any>;
-
-	function getCurrentData() {
-		return JSON.parse(localStorage.getItem('storageKey') || '[]') as ItemType[];
-	}
-
-	function setData(data: ItemType[]) {
-		localStorage.setItem('storageKey', JSON.stringify(data));
-	}
-
-	const data = getCurrentData();
+	const data = getCurrentData()
 	const defaultItem = {
 		firstName: '',
 		lastName: '',
 		score: '',
-	};
+	}
 
-	function updateKeyValue(_id: string, key: string, value: any) {
-		const currentData = getCurrentData();
-		const itemToUpdate = currentData.find(item => item._id === _id);
+	const updateKeyValue = (_id: string, key: string, value: any) => {
+		const currentData = getCurrentData()
+		const itemToUpdate = currentData.find((item) => item._id === _id)
 		if (itemToUpdate) {
-			itemToUpdate[key] = value;
-			setData(currentData);
+			itemToUpdate[key] = value
+			setData(currentData)
 		}
 	}
 
-	function removeItem(_id: string) {
-		const currentData = getCurrentData();
-		setData(currentData.filter(item => item._id !== _id));
+	const removeItem = (_id: string) => {
+		const currentData = getCurrentData()
+		setData(currentData.filter((item) => item._id !== _id))
 	}
 
-	function addItem(item: ItemType) {
-		const currentData = getCurrentData();
-		setData(currentData.concat(item));
+	const addItem = (item: ItemType) => {
+		const currentData = getCurrentData()
+		setData(currentData.concat(item))
 	}
 
 	const InputComponent = (
@@ -125,23 +115,23 @@ export function ExampleDynamicList() {
 	) => (
 		<div key={item._id}>
 			<input
-				placeholder="First Name"
+				placeholder='First Name'
 				value={item.firstName}
-				onChange={e => handleInputChange(item._id, 'firstName', e.target.value)}
+				onChange={(e) => handleInputChange(item._id, 'firstName', e.target.value)}
 			/>
 			<input
-				placeholder="Last Name"
+				placeholder='Last Name'
 				value={item.lastName}
-				onChange={e => handleInputChange(item._id, 'lastName', e.target.value)}
+				onChange={(e) => handleInputChange(item._id, 'lastName', e.target.value)}
 			/>
 			<input
-				placeholder="Score"
+				placeholder='Score'
 				value={item.score}
-				onChange={e => handleInputChange(item._id, 'score', e.target.value)}
+				onChange={(e) => handleInputChange(item._id, 'score', e.target.value)}
 			/>
-			{!isLastItem ? <button onClick={() => handleDelete(item._id)}>Delete</button> : null}
+			{isLastItem ? null : <button onClick={() => handleDelete(item._id)}>Delete</button>}
 		</div>
-	);
+	)
 
 	return (
 		<DynamicList<ItemType>
@@ -151,9 +141,25 @@ export function ExampleDynamicList() {
 			updateKeyValue={updateKeyValue}
 			removeItem={removeItem}
 			defaultItem={defaultItem}
+			getRandomId={getRandomId}
 		/>
-	);
+	)
 }
+
+function getCurrentData() {
+	return JSON.parse(localStorage.getItem('storageKey') || '[]') as ItemType[]
+}
+
+function setData(data: ItemType[]) {
+	localStorage.setItem('storageKey', JSON.stringify(data))
+}
+
+function getRandomId() {
+	// e.g. crypto.randomUUID() or uuidv4()
+	return Date.now().toString()
+}
+
+type ItemType = Record<string, any>
 ```
 
 ## Larry Tesler: No Modes
