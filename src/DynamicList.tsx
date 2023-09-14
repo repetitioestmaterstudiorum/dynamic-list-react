@@ -79,7 +79,7 @@ export function DynamicList<T extends { [key: string]: any }>({
 function isValueSet(value: any) {
 	if (value == null) return false // null or undefined
 	if (!(typeof value === 'string') && !Array.isArray(value)) {
-		console.error('isValueSet only supports null, undefined, string and array')
+		console.debug('isValueSet only supports null, undefined, string and array')
 		return false
 	}
 	return !!(Array.isArray(value) ? value.length : value)
