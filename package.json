@@ -4,7 +4,9 @@
 	"description": "No-modes input management for dynamic React forms.",
 	"main": "dist/DynamicList.js",
 	"scripts": {
-		"prepublish": "tsc"
+		"build": "tsc",
+		"patch": "npm version patch",
+		"publish:patch": "npm run build && npm run patch && npm publish"
 	},
 	"repository": {
 		"type": "git",
