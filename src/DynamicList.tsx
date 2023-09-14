@@ -8,13 +8,14 @@ export function DynamicList<T extends { [key: string]: any }>({
 	removeItem,
 	defaultItem,
 	getRandomId = () => String(Date.now()),
-}: DynamicListProps<Partial<T>>) {
-	const defaultItemWithId = defaultItem._id
-		? { ...defaultItem }
-		: { ...defaultItem, _id: getRandomId() }
+}: DynamicListProps<T>) {
+	const defaultItemWithId = {
+		...defaultItem,
+		_id: defaultItem._id || getRandomId(),
+	} as unknown as T
 
 	const initialData = [...(dataProp || []), defaultItemWithId]
-	const [data, setData] = useState<Array<Partial<T>>>(initialData)
+	const [data, setData] = useState<Array<T>>(initialData as unknown as T[])
 
 	const numDefaultSetKeys = Object.values(defaultItemWithId).filter(isValueSet).length
 
@@ -39,7 +40,7 @@ export function DynamicList<T extends { [key: string]: any }>({
 			).length === 0
 		) {
 			// Add a new line to data
-			updatedData.push({ ...defaultItem, _id: getRandomId() })
+			updatedData.push({ ...defaultItem, _id: getRandomId() } as unknown as T)
 		}
 
 		// If more than 1 items without content (except default set field)
@@ -86,13 +87,13 @@ function isValueSet(value: any) {
 
 type DynamicListProps<T> = {
 	renderComponent: (
-		item: Partial<T>,
+		item: T,
 		handleInputChange: HandleInputChange<T>,
 		handleDelete: HandleDelete,
 		isLastItem: boolean
 	) => ReactNode
-	dataProp?: Array<Partial<T>>
-	addItem: (item: Partial<T>) => void
+	dataProp?: Array<T>
+	addItem: (item: T) => void
 	updateKeyValue: (_id: string, key: keyof T, value: any) => void
 	removeItem: (_id: string) => void
 	defaultItem: Partial<T>
