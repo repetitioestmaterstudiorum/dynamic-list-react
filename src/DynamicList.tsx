@@ -8,13 +8,13 @@ export function DynamicList<T extends { [key: string]: any }>({
 	removeItem,
 	defaultItem,
 	getRandomId = () => String(Date.now()),
-}: DynamicListProps<T>) {
+}: DynamicListProps<Partial<T>>) {
 	const defaultItemWithId = defaultItem._id
 		? { ...defaultItem }
 		: { ...defaultItem, _id: getRandomId() }
 
 	const initialData = [...(dataProp || []), defaultItemWithId]
-	const [data, setData] = useState<Array<T>>(initialData)
+	const [data, setData] = useState<Array<Partial<T>>>(initialData)
 
 	const numDefaultSetKeys = Object.values(defaultItemWithId).filter(isValueSet).length
 
@@ -79,22 +79,23 @@ function isValueSet(value: any) {
 	if (value == null) return false // null or undefined
 	if (!(typeof value === 'string') && !Array.isArray(value)) {
 		console.error('isValueSet only supports null, undefined, string and array')
+		return false
 	}
 	return !!(Array.isArray(value) ? value.length : value)
 }
 
 type DynamicListProps<T> = {
 	renderComponent: (
-		item: T,
+		item: Partial<T>,
 		handleInputChange: HandleInputChange<T>,
 		handleDelete: HandleDelete,
 		isLastItem: boolean
 	) => ReactNode
-	dataProp?: Array<T>
-	addItem: (item: T) => void
+	dataProp?: Array<Partial<T>>
+	addItem: (item: Partial<T>) => void
 	updateKeyValue: (_id: string, key: keyof T, value: any) => void
 	removeItem: (_id: string) => void
-	defaultItem: T
+	defaultItem: Partial<T>
 	getRandomId?: () => string
 }
 
