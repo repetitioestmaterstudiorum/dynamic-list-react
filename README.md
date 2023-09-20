@@ -111,9 +111,11 @@ export function ExampleDynamicList() {
 		item: ItemType,
 		handleInputChange: HandleInputChange<ItemType>,
 		handleDelete: HandleDelete,
-		isLastItem: boolean
+		isLastItem: boolean,
+		idx: number
 	) => (
 		<div key={item._id}>
+			<p>Item {idx + 1}</p>
 			<input
 				placeholder='First Name'
 				value={item.firstName}

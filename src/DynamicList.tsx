@@ -68,9 +68,9 @@ export function DynamicList<T extends { [key: string]: any }>({
 
 	return (
 		<>
-			{data.map((item) => {
+			{data.map((item, idx) => {
 				const isLastItem = item._id === data[data.length - 1]._id
-				return renderComponent(item, handleInputChange, handleDelete, isLastItem)
+				return renderComponent(item, handleInputChange, handleDelete, isLastItem, idx)
 			})}
 		</>
 	)
@@ -90,7 +90,8 @@ type DynamicListProps<T> = {
 		item: T,
 		handleInputChange: HandleInputChange<T>,
 		handleDelete: HandleDelete,
-		isLastItem: boolean
+		isLastItem: boolean,
+		idx: number
 	) => ReactNode
 	dataProp?: Array<T>
 	addItem: (item: T) => void
