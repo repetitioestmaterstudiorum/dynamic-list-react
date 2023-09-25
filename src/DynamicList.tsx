@@ -22,15 +22,11 @@ export function DynamicList<T extends { [key: string]: any }>({
 	const handleInputChange = (_id: string, key: keyof T, value: any) => {
 		const updatedData = [...data]
 		const index = updatedData.findIndex((item) => item._id === _id)
-
 		updatedData[index][key] = value
 
 		// If value is for last item that is not in data prop, add it to data prop
 		if (index === updatedData.length - 1 && value && !dataProp?.some((item) => item._id === _id)) {
 			addItem({ ...updatedData[index] })
-		} else {
-			// Update data prop of already existing item in data prop
-			updateKeyValue(_id, key, value)
 		}
 
 		// If there is no item without content (except default set field)
@@ -41,10 +37,8 @@ export function DynamicList<T extends { [key: string]: any }>({
 		) {
 			// Add a new line to data
 			updatedData.push({ ...defaultItem, _id: getRandomId() } as unknown as T)
-		}
-
-		// If more than 1 items without content (except default set field)
-		if (
+		} else if (
+			// If more than 1 items without content (except default set field)
 			updatedData.filter(
 				(item) => Object.values(item).filter(isValueSet).length === numDefaultSetKeys
 			).length > 1
@@ -56,6 +50,9 @@ export function DynamicList<T extends { [key: string]: any }>({
 			)
 			// Remove the first of the two items by _id in the data prop
 			removeItem(_id)
+		} else {
+			// Update data prop of already existing item in data prop
+			updateKeyValue(_id, key, value)
 		}
 
 		setData(updatedData)
