@@ -10,7 +10,7 @@ Inspired by Larry Tesler's work, this package contains a react component to rend
 
 ### Basic Example
 
-![Basic Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/basic-example.gif)
+![Basic Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/basic-example.gif?raw=true)
 
 ```javascript
 import React from 'react';
@@ -74,7 +74,7 @@ type ItemType = Record<string, any>;
 
 ### Advanced Example
 
-![Advanced Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/advanced-example.gif)
+![Advanced Example Illustration](https://github.com/repetitioestmaterstudiorum/dynamic-list-react/raw/main/assets/advanced-example.gif?raw=true)
 
 ```javascript
 import React from 'react'
